@@ -1,5 +1,5 @@
 /* eslint-disable prefer-const */
-import { BigInt, BigDecimal, store, Address } from '@graphprotocol/graph-ts'
+import { log,BigInt, BigDecimal, store, Address } from '@graphprotocol/graph-ts'
 import {
   Pair,
   Token,
@@ -235,8 +235,11 @@ export function handleSync(event: Sync): void {
 
   // update ETH price now that reserves could have changed
   let bundle = Bundle.load('1')
+  log.info("-----------------------------getEthPriceInUSD is:{}",[getEthPriceInUSD().toString()]);
   bundle.ethPrice = getEthPriceInUSD()
   bundle.save()
+
+  log.info("-----------------------------bundle.ethPrice() is:{}",[bundle.ethPrice.toString()]);
 
   token0.derivedETH = findEthPerToken(token0 as Token)
   token1.derivedETH = findEthPerToken(token1 as Token)
